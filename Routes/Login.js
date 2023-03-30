@@ -3,7 +3,6 @@ const { RegistrarPOST , LoginPOST,DeleteUsuario,PutUsuario,GetUsuarios} = requir
 const {Validate_Email,Errors_Relay,ValidaJWT,RequiereRole,Roles}=require('../Middlewares/Index')
 const { check } = require('express-validator');
 
-
 const router=Router();
 
 //iniciar sesion 

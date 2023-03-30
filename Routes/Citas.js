@@ -1,5 +1,5 @@
 const {Router}=require('express');
-const { RegistrarCitaPOST, GetCitas, DeleteCitas} = require('../Controllers/Citas');
+const { RegistrarCitaPOST, GetCitas,PutCita, DeleteCita} = require('../Controllers/Citas');
 const { check } = require('express-validator');
 const {Valida_Citas,Errors_Relay,ValidaJWT,RequiereRole,Roles}=require('../Middlewares/Index')
 
@@ -36,18 +36,17 @@ check('Medico','El campo Medico es obligatorio').notEmpty(),
 Errors_Relay],PutCita);
 
 //mostrar Citar 
-router.get('/mostrar'
+router.get('/mostrar',
 [ValidaJWT,
 RequiereRole(Roles.admin,Roles.recepcionista),
-Errors_Relay
-],GetCitas);
+Errors_Relay],GetCitas);
 
 //eliminar Citas
 router.delete('/eliminar/:_id',
 [ValidaJWT,RequiereRole(Roles.recepcionista,Roles.admin),
 check('_id','El campo _id está vacio').notEmpty(),
 check('_id','El _id no es valido').isMongoId(),
-Errors_Relay],DeleteCitas);
+Errors_Relay],DeleteCita);
 
 
 

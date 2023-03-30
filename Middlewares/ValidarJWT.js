@@ -2,7 +2,7 @@ const { request,response } = require('express');
 const Jwt =require('jsonwebtoken');
 require('dotenv').config();
 
-const ValidaJWT =(req=request,res=response,next)=>{
+const ValidaJWT = (req=request,res=response,next)=>{
     try {
         const token=req.header('auth');
         if(!token){

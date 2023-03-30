@@ -1,6 +1,8 @@
 const express=require('express');
 require('dotenv').config();
 const ConectorMongo=require('../Database/Mongo');
+const listEndpoints = require('express-list-endpoints');
+
 
 class Server{
     constructor(){
@@ -11,6 +13,8 @@ class Server{
        this.MiddleWares();
        this.Routes();
        this.MongoDB();
+
+        
     }
     listen(){
         this.App.listen(this.Port,()=>{
@@ -22,6 +26,7 @@ class Server{
     Routes(){
         this.App.use(this.LoginPath,require('../Routes/Login'));
         this.App.use(this.CitaPath,require('../Routes/Citas'));
+        console.log(listEndpoints(this.App,{ extended: true }));
     }
     
     MiddleWares(){
