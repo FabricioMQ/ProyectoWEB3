@@ -46,7 +46,7 @@ const LoginPOST=async(req=request, res=response)=>{
             msg:'Email o Password invalidos',
         });
     }
-    const token=await GenerarJWT(usuario.id);
+    const token=await GenerarJWT(usuario.id,usuario.Rol);
     return res.status(200).json({
         Ok:200,
         msg:'Informacion para acceder a las rutas',
