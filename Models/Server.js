@@ -26,9 +26,6 @@ class Server{
     Routes(){
         this.App.use(this.LoginPath,require('../Routes/Login'));
         this.App.use(this.CitaPath,require('../Routes/Citas'));
-        this.App.get('/', (req, res) => {
-            res.redirect('/api/login/auth');
-          });
         console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
     }
     

@@ -6,39 +6,50 @@ const { check } = require('express-validator');
 const router=Router();
 
 //iniciar sesion 
-router.post('/auth',
-[check('Email','El Email es obligatorio').notEmpty(),
-check('Email','El Email no es valido').isEmail(),
-check('Password','El Password es obligatorio').notEmpty(),Errors_Relay],LoginPOST);
+router.post('/auth',[ 
+    check('Email')
+        .notEmpty().withMessage('El Email es obligatorio')
+        .isEmail().withMessage('El Email no es valido'),
+    check('Password')
+        .notEmpty().withMessage('El Password es obligatorio'),
+    Errors_Relay, 
+],LoginPOST);
+
 
 //registrar usuarios
-router.post('/registrar',
-[check('Email','El Email es obligatorio').notEmpty(),
-check('Email','El Email no es valido').isEmail(),
-check('Email','El Email esta en uso').custom(Validate_Email),
-check('Password','El Password es obligatorio').notEmpty()
-,Errors_Relay],RegistrarPOST);
+router.post('/registrar', [
+    check('Email')
+         .notEmpty().withMessage('El Email es obligatorio')
+        .isEmail().withMessage('El Email no es valido')
+        .custom(Validate_Email).withMessage('El Email esta en uso'),
+    check('Password')
+        .notEmpty().withMessage('El Password es obligatorio'),
+  Errors_Relay
+], RegistrarPOST);
 
 //actualizar usuarios
-router.put('/actualizar/:_id',
-[ValidaJWT,
-RequiereRole(Roles.admin),
-check('Rol','El campo Rol es obligatorio').notEmpty(),
-Errors_Relay],PutUsuario);
+router.put('/actualizar/:_id', [
+    ValidaJWT,
+    RequiereRole(Roles.admin),
+    check('Rol')
+        .notEmpty().withMessage('El campo Rol es obligatorio'),
+    Errors_Relay
+  ], PutUsuario);
+  
 
 //mostrar usuarios
-router.get('/usuarios',
-[ValidaJWT,
-RequiereRole(Roles.admin),
-Errors_Relay
-],GetUsuarios);
+router.get('/usuarios', [ValidaJWT, RequiereRole(Roles.admin)], GetUsuarios);
+
 
 //eliminar usuarios
-router.delete('/eliminar/:_id',
-[ValidaJWT,RequiereRole(Roles.admin),
-check('_id','El campo _id está vacio').notEmpty(),
-check('_id','El _id no es valido').isMongoId(),
-Errors_Relay],DeleteUsuario);
+router.delete('/eliminar/:_id',[
+    ValidaJWT,
+    RequiereRole(Roles.admin),
+    check('_id')
+        .notEmpty().withMessage('El campo _id está vacio')
+        .isMongoId().withMessage('El _id no es valido'),
+    Errors_Relay
+],DeleteUsuario);
 
 
 
