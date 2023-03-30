@@ -62,7 +62,7 @@ const LoginPOST=async(req=request, res=response)=>{
 }
     const GetUsuarios=async(req=request,res=response)=>{
         try {
-            const usuarios = await Usuarios.find();
+            const usuarios = await Usuarios.find({}, { Password: 0 });
             res.status(200).json({
                 ok:200,
                 msg:'Listado de todos los usuarios desde el metodo GetUsuarios',
