@@ -48,7 +48,7 @@ const LoginPOST=async(req=request, res=response)=>{
     }
     const token=await GenerarJWT(usuario.id);
     return res.status(200).json({
-        Ok:true,
+        Ok:200,
         msg:'Informacion para acceder a las rutas',
         token:token,
     });
