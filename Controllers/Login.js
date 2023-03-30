@@ -1,6 +1,7 @@
 const {request, response}=require('express');
 const Usuario=require('../Models/Usuarios');
 var bcrypt = require('bcryptjs');
+const Usuarios = require('../Models/Usuarios');
 
 const RegistrarPOST=async(req=request, res=response)=>{
     try {
@@ -45,12 +46,14 @@ const LoginPOST=async(req=request, res=response)=>{
             msg:'Email o Password invalidos',
         });
     }
-    //const token=await GenerarJWT(user.id);
+    const token=await GenerarJWT(user.id);
     return res.status(200).json({
         Ok:true,
-        msg:'Estoy enviando desde el login',
+        msg:'Informacion para acceder a las rutas',
+        token:token,
+        rol:usuario.Rol
     });
-   } catch (error) {
+   } catch (err) {
     console.log(err);
     res.status(500).json({
         ok:500,
@@ -58,7 +61,60 @@ const LoginPOST=async(req=request, res=response)=>{
     });
     }
 }
+    const GetUsuarios=async(req=request,res=response)=>{
+        try {
+            const usuarios = await Usuarios.find();
+            res.status(200).json({
+                ok:200,
+                msg:'Listado de todos los usuarios desde el metodo GetUsuarios',
+                data:usuarios
+            })
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                ok:500,
+                msg:'Ha ocurrido un error inesperado en el servidor en el metodo GetUsuarios'
+            });
+        }
+    }
+    const DeleteUsuario=async(req=request,res=response)=>{
+        try {
+            const {_id}=req.params;
+            await Usuarios.findByIdAndDelete({_id});
+            res.status(200).json({
+                ok:200,
+                msg:'Usuario eliminado con exito desde el metodo DeleteUsuarios'
+            })
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                ok:500,
+                msg:'Ha ocurrido un error inesperado en el servidor en el metodo DeleteUsuarios'
+            });
+        }
+    }
+    const PutUsuario=async(req=request,res=response)=>{
+        try {
+            const {_id}=req.params;
+            const {Rol}=req.body;
+            await Usuarios.findByIdAndUpdate({_id},{Rol});
+            res.status(200).json({
+                ok:200,
+                msg:'Usuario Actualizado con exito desde el metodo PutUsuarios'
+            })
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                ok:500,
+                msg:'Ha ocurrido un error inesperado en el servidor en el metodo PutUsuarios'
+            });
+        }
+    }
+    
 module.exports={
     RegistrarPOST,
-    LoginPOST
+    LoginPOST,
+    GetUsuarios,
+    DeleteUsuario,
+    PutUsuario
 }

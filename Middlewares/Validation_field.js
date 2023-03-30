@@ -17,18 +17,8 @@ const Validate_Email=async(value)=>{
       }
     });
 }
-const Validate_Cita=async(req,res)=>{
-  return Usuario.exists({'Hora':req.Hora,'Medico':req.Medico,'Fecha':req.Fecha}).then(usuario => {
-    if (usuario) {
-      return Promise.reject(`No hay cita para esta fecha y hora con el medico `);
-    }else{
-      return Promise.resolve('Si existe cita')
-    }
-  });
-}
 
 module.exports={
     Errors_Relay,
-    Validate_Email,
-    Validate_Cita
+    Validate_Email
 }

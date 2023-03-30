@@ -13,6 +13,11 @@ const SchemaUsuario = new Schema({
     Rol:{
         type:String,
         default:'Public'
+    },
+    Google:{
+        type:Boolean,
+        default:false,
+        Required:[true,'El campo Google es requerido']
     }
 })
 module.exports=model('Usuario',SchemaUsuario);
