@@ -2,7 +2,7 @@ const {request, response}=require('express');
 const Usuario=require('../Models/Usuarios');
 var bcrypt = require('bcryptjs');
 const Usuarios = require('../Models/Usuarios');
-
+const GenerarJWT=require('../Helpers/generarWebToken')
 const RegistrarPOST=async(req=request, res=response)=>{
     try {
 
