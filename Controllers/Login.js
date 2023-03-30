@@ -46,12 +46,11 @@ const LoginPOST=async(req=request, res=response)=>{
             msg:'Email o Password invalidos',
         });
     }
-    const token=await GenerarJWT(user.id);
+    const token=await GenerarJWT(usuario.id);
     return res.status(200).json({
         Ok:true,
         msg:'Informacion para acceder a las rutas',
         token:token,
-        rol:usuario.Rol
     });
    } catch (err) {
     console.log(err);
