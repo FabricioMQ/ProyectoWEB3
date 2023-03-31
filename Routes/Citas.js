@@ -10,22 +10,24 @@ router.post('/registrar', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.recepcionista, Roles.public),
     check('Nombre')
-        .notEmpty().withMessage('El Nombre es obligatorio'),
+        .notEmpty().withMessage('El campo Nombre es obligatorio'),
     check('Apellido')
-        .notEmpty().withMessage('El Apellido es obligatorio'),
+        .notEmpty().withMessage('El campo Apellido es obligatorio'),
     check('Telefono')
-        .notEmpty().withMessage('El Telefono es obligatorio'),
+        .notEmpty().withMessage('El campo Telefono es obligatorio'),
     check('Fecha')
-        .notEmpty().withMessage('El Fecha es obligatorio')
+        .notEmpty().withMessage('El campo Fecha es obligatorio')
         .isDate().withMessage('El campo Fecha no es tipo date'),
     check('Hora')
-        .notEmpty().withMessage('El Hora es obligatorio')
+        .notEmpty().withMessage('El campo Hora es obligatorio')
         .isTime().withMessage('El formato de Hora no es valida'),
     check('Especialidad')
-        .notEmpty().withMessage('El Especialidad es obligatorio'),
+        .notEmpty().withMessage('El campo Especialidad es obligatorio'),
     check('Medico')
-        .notEmpty().withMessage('El Médico es obligatorio'),
-    Valida_Citas,
+        .notEmpty().withMessage('El campo Médico es obligatorio')
+        .custom((value, { req }) => {
+            return Valida_Citas(req.body.Hora,value, req.body.Fecha);
+        }).withMessage('No hay cita para esta fecha y hora con el medico'),
     Errors_Relay
 ], RegistrarCitaPOST);
 
@@ -45,8 +47,10 @@ router.post('/registrar', [
         check('Especialidad')
             .notEmpty().withMessage('El campo Especialidad es obligatorio'),
         check('Medico')
-          .notEmpty().withMessage('El campo Medico es obligatorio'),
-        Valida_Citas,
+          .notEmpty().withMessage('El campo Medico es obligatorio')
+          .custom((value, { req }) => {
+            return Valida_Citas(req.body.Hora,value, req.body.Fecha);
+        }).withMessage('No hay cita para esta fecha y hora con el medico'),
         Errors_Relay
       ], PutCita);
       

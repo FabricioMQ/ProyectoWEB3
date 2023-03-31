@@ -1,7 +1,8 @@
 const { validationResult } = require('express-validator');
+const { request,response } = require('express');
 const Usuario=require('../Models/Usuarios');
 
-const Errors_Relay= async(req,res,next)=>{
+const Errors_Relay= async(req=request,res=response,next)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -9,7 +10,7 @@ const Errors_Relay= async(req,res,next)=>{
     next();
 }
 const Validate_Email=async(value)=>{
-    return Usuario.exists({'Email':value}).then(usuario => {
+    return await Usuario.exists({'Email':value}).then(usuario => {
       if (usuario) {
         return Promise.reject('Email ya esta en uso');
       }else{

@@ -8,10 +8,10 @@ const router=Router();
 //iniciar sesion 
 router.post('/auth',[ 
     check('Email')
-        .notEmpty().withMessage('El Email es obligatorio')
-        .isEmail().withMessage('El Email no es valido'),
+        .notEmpty().withMessage('El campo Email es obligatorio')
+        .isEmail().withMessage('El campo Email no es valido'),
     check('Password')
-        .notEmpty().withMessage('El Password es obligatorio'),
+        .notEmpty().withMessage('El campo Password es obligatorio'),
     Errors_Relay, 
 ],LoginPOST);
 
@@ -19,11 +19,11 @@ router.post('/auth',[
 //registrar usuarios
 router.post('/registrar', [
     check('Email')
-         .notEmpty().withMessage('El Email es obligatorio')
-        .isEmail().withMessage('El Email no es valido')
-        .custom(Validate_Email).withMessage('El Email esta en uso'),
+         .notEmpty().withMessage('El campo Email es obligatorio')
+        .isEmail().withMessage('El campo Email no es valido')
+        .custom(Validate_Email).withMessage('El campo Email esta en uso'),
     check('Password')
-        .notEmpty().withMessage('El Password es obligatorio'),
+        .notEmpty().withMessage('El campo Password es obligatorio'),
   Errors_Relay
 ], RegistrarPOST);
 
@@ -32,7 +32,7 @@ router.put('/actualizar/:_id', [
     ValidaJWT,
     RequiereRole(Roles.admin),
     check('Rol')
-        .notEmpty().withMessage('El campo Rol es obligatorio'),
+        .notEmpty().withMessage('El campo campo Rol es obligatorio'),
     Errors_Relay
   ], PutUsuario);
   
