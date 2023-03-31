@@ -24,11 +24,12 @@ class Server{
     
     
     Routes(){
+        this.App.use(cors());
         this.App.use(this.LoginPath,require('../Routes/Login'));
         this.App.use(this.CitaPath,require('../Routes/Citas'));
-        this.App.use(cors());
         console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
     }
+
     
     MiddleWares(){
         this.App.use(express.json());
