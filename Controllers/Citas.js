@@ -7,7 +7,7 @@ const RegistrarCitaPOST=async(req=request, res=response)=>{
         const {Nombre,Apellido,Telefono,Fecha,Hora,Especialidad,Medico}=req.body;
         const cita = new Cita({Nombre,Apellido,Telefono,Fecha,Hora,Especialidad,Medico});
         await cita.save();
-        res.json(
+        res.status(200).json(
             {
                 ok:200,
                 "msg":"Registrado cita correctamente",

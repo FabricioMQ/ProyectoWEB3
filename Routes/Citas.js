@@ -54,7 +54,7 @@ router.post('/registrar', [
         Errors_Relay
       ], PutCita);
       
-//mostrar Citar 
+//mostrar Citas
 router.get('/mostrar', [ValidaJWT,RequiereRole(Roles.admin, Roles.recepcionista)], GetCitas);
   
 

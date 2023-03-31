@@ -12,7 +12,7 @@ const RegistrarPOST=async(req=request, res=response)=>{
         usuario.Password = bcrypt.hashSync(Password, salt);
     
         await usuario.save();
-        res.json(
+        res.status(200).json(
             {
                 ok:200,
                 "msg":"Registrado correctamente"
@@ -31,7 +31,7 @@ const RegistrarPOST=async(req=request, res=response)=>{
 const LoginPOST=async(req=request, res=response)=>{
    try {
     const {Email,Password}=req.body;
-    const usuario=await Usuario.findOne({'Email':Email})
+    const usuario=await Usuario.findOne({ 'Email': { $regex: new RegExp(Email, 'i') } })
 
     if(!usuario){
         return res.status(400).json({
@@ -109,7 +109,7 @@ const LoginPOST=async(req=request, res=response)=>{
             });
         }
     }
-    
+    //falta login con google 
 module.exports={
     RegistrarPOST,
     LoginPOST,
