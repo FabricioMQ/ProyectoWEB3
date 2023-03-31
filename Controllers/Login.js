@@ -34,15 +34,15 @@ const LoginPOST=async(req=request, res=response)=>{
     const usuario=await Usuario.findOne({ 'Email': { $regex: new RegExp(Email, 'i') } })
 
     if(!usuario){
-        return res.status(400).json({
-            Ok:false,
+        return res.status(401).json({
+            Ok:401 ,
             msg:'Email o Password invalidos',
         });
     } 
     const passwordValid=bcrypt.compareSync(Password,usuario.Password);
     if(!passwordValid){
-        return res.status(400).json({
-            Ok:false,
+        return res.status(401).json({
+            Ok:401 ,
             msg:'Email o Password invalidos',
         });
     }
