@@ -1,5 +1,5 @@
 const {Router}=require('express');
-const { RegistrarPOST , LoginPOST,DeleteUsuario,PutUsuario,GetUsuarios} = require('../Controllers/Login');
+const { RegistrarPOST , LoginPOST,DeleteUsuario,PutUsuario,GetUsuarios ,GoogleSingIn} = require('../Controllers/Login');
 const {Validate_Email,Errors_Relay,ValidaJWT,RequiereRole,Roles}=require('../Middlewares/Index')
 const { check } = require('express-validator');
 
@@ -15,6 +15,12 @@ router.post('/auth',[
     Errors_Relay, 
 ],LoginPOST);
 
+router.post('/google',[
+    check('id_token','El id_token es necesario')
+        .notEmpty().withMessage('El campo id_token es necesario'),
+    Errors_Relay
+],GoogleSingIn);
+    
 
 //registrar usuarios
 router.post('/registrar', [
