@@ -1,8 +1,7 @@
 const {request, response}=require('express');
-const Citas = require('../Models/Citas');
 const Cita=require('../Models/Citas');
 
-const RegistrarCitaPOST=async(req=request, res=response)=>{
+const PostRegistrarCita=async(req=request, res=response)=>{
     try {
         const {Nombre,Apellido,Telefono,Fecha,Hora,Especialidad,Medico}=req.body;
         const cita = new Cita({Nombre,Apellido,Telefono,Fecha,Hora,Especialidad,Medico});
@@ -25,7 +24,7 @@ const RegistrarCitaPOST=async(req=request, res=response)=>{
 const DeleteCita=async(req=request,res=response)=>{
     try {
         const {_id}=req.params;
-        await Citas.findByIdAndDelete(_id);
+        await Cita.findByIdAndDelete(_id);
         res.status(200).json({
             ok:200,
             msg:'Usuario eliminado con exito desde el metodo DeleteCitas'
@@ -42,7 +41,7 @@ const PutCita=async(req=request,res=response)=>{
     try {
         const {_id}=req.params;
         const {Fecha,Hora,Medico}=req.body;
-        await Citas.findByIdAndUpdate({_id},Fecha,Hora,Medico);
+        await Cita.findByIdAndUpdate({_id},Fecha,Hora,Medico);
         res.status(200).json({
             ok:200,
             msg:'Cita Actualizada con exito desde el metodo PutCitas'
@@ -57,7 +56,7 @@ const PutCita=async(req=request,res=response)=>{
 }
 const GetCitas=async(req=request,res=response)=>{
     try {
-        const citas = await Citas.find();
+        const citas = await Cita.find();
         res.status(200).json({
             ok:200,
             msg:'Listado de todos los usuarios desde el metodo GetCitas',
@@ -72,7 +71,7 @@ const GetCitas=async(req=request,res=response)=>{
     }
 }
 module.exports={
-    RegistrarCitaPOST,
+    PostRegistrarCita,
     DeleteCita,
     PutCita,
     GetCitas

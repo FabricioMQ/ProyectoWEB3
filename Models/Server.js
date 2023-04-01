@@ -8,8 +8,9 @@ class Server{
     constructor(){
        this.App=express();
        this.Port=process.env.PORT;
-       this.LoginPath='/api/login'
+       this.LoginPath='/api/auth'
        this.CitaPath='/api/cita'
+       this.UsuarioPath='/api/usuario'
        this.MiddleWares();
        this.Routes();
        this.MongoDB();
@@ -25,8 +26,9 @@ class Server{
     
     Routes(){
         this.App.use(cors());
-        this.App.use(this.LoginPath,require('../Routes/Login'));
+        this.App.use(this.LoginPath,require('../Routes/Auth'));
         this.App.use(this.CitaPath,require('../Routes/Citas'));
+        this.App.use(this.UsuarioPath,require('../Routes/Usuarios'));
         console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
     }
 

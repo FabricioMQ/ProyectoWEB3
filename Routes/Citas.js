@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const { RegistrarCitaPOST, GetCitas, PutCita, DeleteCita } = require('../Controllers/Citas');
+const { PostRegistrarCita, GetCitas, PutCita, DeleteCita } = require('../Controllers/Citas');
 const { check } = require('express-validator');
 const { Valida_Citas, Errors_Relay, ValidaJWT, RequiereRole, Roles } = require('../Middlewares/Index')
 
 const router = Router();
 
 //Registrar citas
-router.post('/registrar', [
+router.post('/', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.recepcionista, Roles.public),
     check('Nombre')
@@ -29,10 +29,10 @@ router.post('/registrar', [
             return Valida_Citas(req.body.Hora,value, req.body.Fecha);
         }).withMessage('No hay cita para esta fecha y hora con el medico'),
     Errors_Relay
-], RegistrarCitaPOST);
+], PostRegistrarCita);
 
 //actualizar Cita
-    router.put('/actualizar/:_id', [
+    router.put('/:_id', [
         ValidaJWT,
         RequiereRole(Roles.admin, Roles.recepcionista),
         check('_id')
@@ -55,11 +55,11 @@ router.post('/registrar', [
       ], PutCita);
       
 //mostrar Citas
-router.get('/mostrar', [ValidaJWT,RequiereRole(Roles.admin, Roles.recepcionista)], GetCitas);
+router.get('/', [ValidaJWT,RequiereRole(Roles.admin, Roles.recepcionista)], GetCitas);
   
 
 //eliminar Citas
-router.delete('/eliminar/:_id',[
+router.delete('/:_id',[
     ValidaJWT, 
     RequiereRole(Roles.recepcionista, Roles.admin),
     check('_id')
