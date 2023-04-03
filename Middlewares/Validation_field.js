@@ -20,8 +20,18 @@ const Validate_Email=async(value)=>{
       }
     });
 }
+const Validate_Identificacion=async(value)=>{
+  return await Usuario.exists({'Identificacion':value}).then(usuario => {
+    if (usuario) {
+      return Promise.reject('La Identificacion ya pertenece a un expediente ');
+    }else{
+      return Promise.resolve('La Identificacion esta li')
+    }
+  });
+}
 
 module.exports={
     Errors_Relay,
-    Validate_Email
+    Validate_Email,
+    Validate_Identificacion
 }

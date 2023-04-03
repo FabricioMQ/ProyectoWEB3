@@ -1,7 +1,6 @@
 const { request, response } = require('express');
 const Usuario = require('../Models/Usuarios');
 var bcrypt = require('bcryptjs');
-const { post } = require('../Routes/Auth');
 
 const PostRegistrarUsuario = async (req = request, res = response) => {
     try {

@@ -47,8 +47,8 @@ router.post('/', [
         check('Especialidad')
             .notEmpty().withMessage('El campo Especialidad es obligatorio'),
         check('Medico')
-          .notEmpty().withMessage('El campo Medico es obligatorio')
-          .custom((value, { req }) => {
+            .notEmpty().withMessage('El campo Medico es obligatorio')
+            .custom((value, { req }) => {
             return Valida_Citas(req.body.Hora,value, req.body.Fecha);
         }).withMessage('No hay cita para esta fecha y hora con el medico'),
         Errors_Relay

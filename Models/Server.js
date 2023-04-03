@@ -11,6 +11,7 @@ class Server{
        this.LoginPath='/api/auth'
        this.CitaPath='/api/cita'
        this.UsuarioPath='/api/usuario'
+       this.ExpedientePath='/api/expediente'
        this.MiddleWares();
        this.Routes();
        this.MongoDB();
@@ -29,6 +30,7 @@ class Server{
         this.App.use(this.LoginPath,require('../Routes/Auth'));
         this.App.use(this.CitaPath,require('../Routes/Citas'));
         this.App.use(this.UsuarioPath,require('../Routes/Usuarios'));
+        this.App.use(this.ExpedientePath,require('../Routes/Expedientes'));
         console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
     }
 

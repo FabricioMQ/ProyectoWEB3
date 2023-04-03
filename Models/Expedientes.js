@@ -149,7 +149,8 @@ MedicamentoAlergicos:[
     SchemaMedicamentoAlergico
 ],
 ContactosEmergencias:[
-    SchemaContactoEmergencia
+    SchemaContactoEmergencia,
+  {  required:[true,'El campo contacto de emergencia es requerido , minimo 1 contacto']}
 ],
 ConsultasMedicas:[
     SchemaConsultaMedica
