@@ -102,8 +102,6 @@ router.post('/contactoemergencia/:_id', [
         .notEmpty().withMessage('El campo Nombre es obligatorio'),
     check('Apellido')
         .notEmpty().withMessage('El campo Apellido es obligatorio'),
-    check('Relacion')
-        .notEmpty().withMessage('El campo Relacion es obligatorio'),
     check('Telefono')
         .notEmpty().withMessage('El campo Telefono es obligatorio'),
     check('Direccion')
