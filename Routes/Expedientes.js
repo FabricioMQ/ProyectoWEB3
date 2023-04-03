@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { PutExpediente, DeleteExpediente, GetExpediente, PostExpediente, GetExpedienteOne, PostEnfermedad, DeleteEnfermedad, PostMedicamentoAlergico, DeleteMedicamentoAlergico, PostContactoEmergencia, DeleteContactoEmergencia } = require('../Controllers/Expedientes');
 const { Errors_Relay, ValidaJWT, Roles, RequiereRole, Validate_Identificacion } = require('../Middlewares/Index')
 const { check } = require('express-validator');
+const { Validate_ContactoEmergencia } = require('../Middlewares/Validar_ContactoEmergencia');
 
 const router = Router();
 //expediente
@@ -118,7 +119,10 @@ router.delete('/contactoemergencia/:_id', [
         .isMongoId().withMessage('El _id no es valido'),
     check('_idContacto')
         .notEmpty().withMessage('El campo _idEnfermedad es obligatorio')
-        .isMongoId().withMessage('El _idContacto no es valido'),
+        .isMongoId().withMessage('El _idContacto no es valido')
+        .custom((value, { req }) => {
+            return Validate_ContactoEmergencia(req.body._id,value);
+        }).withMessage('Necesita minimo un contacto de emergencia'),
     Errors_Relay
 ], DeleteContactoEmergencia);
 
