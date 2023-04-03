@@ -3,6 +3,7 @@ require('dotenv').config();
 const ConectorMongo=require('../Database/Mongo');
 const listEndpoints = require('express-list-endpoints');
 const cors = require('cors');
+const ZonaHoraria=require('../Middlewares/FechaServer');
 
 class Server{
     constructor(){
@@ -12,6 +13,7 @@ class Server{
        this.CitaPath='/api/cita'
        this.UsuarioPath='/api/usuario'
        this.ExpedientePath='/api/expediente'
+       this.ConsultaPath='/api/consulta'
        this.MiddleWares();
        this.Routes();
        this.MongoDB();
@@ -31,12 +33,14 @@ class Server{
         this.App.use(this.CitaPath,require('../Routes/Citas'));
         this.App.use(this.UsuarioPath,require('../Routes/Usuarios'));
         this.App.use(this.ExpedientePath,require('../Routes/Expedientes'));
+        this.App.use(this.ConsultaPath,require('../Routes/Consultas'));
         console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
     }
 
     
     MiddleWares(){
         this.App.use(express.json());
+        this.App.use(ZonaHoraria);
     }
     
     MongoDB(){
