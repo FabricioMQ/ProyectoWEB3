@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const { request,response } = require('express');
 const Usuario=require('../Models/Usuarios');
+const Expediente = require('../Models/Expedientes');
 
 const Errors_Relay= async(req=request,res=response,next)=>{
     const errors = validationResult(req);
@@ -21,8 +22,8 @@ const Validate_Email=async(value)=>{
     });
 }
 const Validate_Identificacion=async(value)=>{
-  return await Usuario.exists({'Identificacion':value}).then(usuario => {
-    if (usuario) {
+  return await  Expediente.exists({'Identificacion':value}).then(expediente => {
+    if (expediente) {
       return Promise.reject('La Identificacion ya pertenece a un expediente ');
     }else{
       return Promise.resolve('La Identificacion esta li')
