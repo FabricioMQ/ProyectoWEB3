@@ -41,9 +41,11 @@ router.put('/:_id', [
     check(' Diagnostico')
         .notEmpty().withMessage('El campo Diagnostico es obligatorio'),
     check('ExamenSangre')
-        .notEmpty().withMessage('El campo ExamenSangre es obligatorio'),
+        .notEmpty().withMessage('El campo ExamenSangre es obligatorio')
+        .isBoolean().withMessage('El campo ExamenSangre no es boolean'),
     check('ExamenOrina')
-        .notEmpty().withMessage('El campo ExamenOrina es obligatorio'),
+        .notEmpty().withMessage('El campo ExamenOrina es obligatorio')
+        .isBoolean().withMessage('El campo ExamenOrina no es boolean'),
     Errors_Relay
 ], PutConsultaMedica);
 

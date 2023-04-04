@@ -77,10 +77,12 @@ const SchemaConsultaMedica=new Schema({
     },
     ExamenSangre:{
         type:Boolean,
+        default:false,
         Required:[true,'El campo examenSangre es requerido para la consulta medica']
     },
     ExamenOrina:{
         type:Boolean,
+        default:false,
         Required:[true,'El campo examenOrina es requerido para la consulta medica']
     },
     RegistrosExamenes:{

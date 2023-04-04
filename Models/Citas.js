@@ -15,6 +15,12 @@ const SchemaCita = new Schema({
     Fecha: {
       type: Date,
       required: [true, 'El campo Fecha es requerido'],
+      validate: {
+        validator: function(v) {
+          return !isNaN(new Date(v).valueOf());
+        },
+        message: 'Ingrese una fecha válida'
+      }
     },
     Hora: {
       type: String,
