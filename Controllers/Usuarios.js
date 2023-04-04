@@ -30,7 +30,7 @@ const PostRegistrarUsuario = async (req = request, res = response) => {
 
 const GetUsuarios = async (req = request, res = response) => {
     try {
-        const usuarios = await Usuarios.find({}, { Password: 0 });
+        const usuarios = await Usuario.find({}, { Password: 0 });
         res.status(200).json({
             ok: 200,
             msg: 'Listado de todos los usuarios desde el metodo GetUsuarios',
@@ -47,7 +47,7 @@ const GetUsuarios = async (req = request, res = response) => {
 const DeleteUsuario = async (req = request, res = response) => {
     try {
         const { _id } = req.params;
-        await Usuarios.findByIdAndDelete({ _id });
+        await Usuario.findByIdAndDelete({ _id });
         res.status(200).json({
             ok: 200,
             msg: 'Usuario eliminado con exito desde el metodo DeleteUsuarios'
@@ -64,7 +64,7 @@ const PutUsuario = async (req = request, res = response) => {
     try {
         const { _id } = req.params;
         const { Rol } = req.body;
-        await Usuarios.findByIdAndUpdate({ _id }, { Rol });
+        await Usuario.findByIdAndUpdate({ _id }, { Rol });
         res.status(200).json({
             ok: 200,
             msg: 'Usuario Actualizado con exito desde el metodo PutUsuarios'

@@ -47,6 +47,14 @@ const SchemaRegistroExamen=new Schema({
     },
 })
 const SchemaConsultaMedica=new Schema({
+    Fecha:{
+        type:Date,
+        Required:[true,'El campo Fecha es requerido para la consulta medica']
+    },
+    Especialidad:{
+        type:String,
+        Required:[true,'El campo Especialidad es requerido para la consulta medica']
+    },
     Presion:{
         type:Number,
         Required:[true,'El campo Presion es requerido para la consulta medica']
