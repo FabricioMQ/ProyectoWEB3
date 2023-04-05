@@ -114,7 +114,7 @@ const SchemaContactoEmergencia=new Schema({
 
 const SchemaExpediente = new Schema({
 
-Identidicacion:{
+Identificacion:{
     type:String,
     unique:true,
     Required:[true,'El campo Identificacion es requerido']

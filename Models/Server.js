@@ -29,18 +29,17 @@ class Server{
     
     Routes(){
         this.App.use(cors());
-        this.App.use(this.LoginPath,require('../Routes/Auth'));
-        this.App.use(this.CitaPath,require('../Routes/Citas'));
-        this.App.use(this.UsuarioPath,require('../Routes/Usuarios'));
-        this.App.use(this.ExpedientePath,require('../Routes/Expedientes'));
-        this.App.use(this.ConsultaPath,require('../Routes/Consultas'));
-        console.log(listEndpoints(this.App,{ extended: true ,prefix: 'https://proyectoweb3.up.railway.app/' }));
+        this.App.use(this.LoginPath,ZonaHoraria,require('../Routes/Auth'));
+        this.App.use(this.CitaPath,ZonaHoraria,require('../Routes/Citas'));
+        this.App.use(this.UsuarioPath,ZonaHoraria,require('../Routes/Usuarios'));
+        this.App.use(this.ExpedientePath,ZonaHoraria,require('../Routes/Expedientes'));
+        this.App.use(this.ConsultaPath,ZonaHoraria,require('../Routes/Consultas'));
+        console.log(listEndpoints(this.App,{ extended: true}));
     }
 
     
     MiddleWares(){
         this.App.use(express.json());
-        this.App.use(ZonaHoraria);
     }
     
     MongoDB(){

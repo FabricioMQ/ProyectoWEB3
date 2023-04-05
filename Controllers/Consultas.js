@@ -4,28 +4,32 @@ const Expediente = require('../Models/Expedientes');
 const GetConsultaMedicaFecha = async (req = request, res = response) => {
     try {
         const { Fecha } = req.body;
-        const fechaInicio = new Date(Fecha).setHours(0, 0, 0, 0);
-        const fechaFin = new Date(Fecha).setHours(23, 59, 59, 999);
-
+        const momentWithTimeZone = req.moment;
+        const fechaInicio = momentWithTimeZone(Fecha).startOf('day').toDate(); // primera hora del día
+        const fechaFin = momentWithTimeZone(Fecha).endOf('day').toDate(); // última hora del día
+        
         const expedientes = await Expediente.find(
-            { 
-              "ConsultasMedicas.Fecha": { 
-                $gte: fechaInicio,
-                $lte: fechaFin 
-              } 
-            }, 
-            { 
-                ConsultasMedicas: 1
+          {
+            "ConsultasMedicas.Fecha": {
+              $gte: fechaInicio,
+              $lte: fechaFin
             }
-          );
+          },
+          {
+            Identificacion:1,
+            Nombre: 1,
+            Apellido: 1,
+            ConsultasMedicas: 1
+          }
+        );
         const resultados = [];
 
         expedientes.forEach(expediente => {
             expediente.ConsultasMedicas.forEach(Consulta=>{
-                resultados.push({ _idExpediente: expediente._id,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
+                resultados.push({ Identificacion: expediente.Identificacion,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
             })
         });
-        resultados.sort((a, b) => new Date(a.Consulta.Fecha) - new Date(b.Consulta.Fecha));
+        resultados.sort((a, b) => a.Consulta.Fecha - b.Consulta.Fecha);
         res.status(200).json({
             ok: 200,
             msg: `Consultas medicas para la fecha ${Fecha}`,
@@ -41,58 +45,15 @@ const GetConsultaMedicaFecha = async (req = request, res = response) => {
 
 }
 
-const GetConsultaMedicaFechaEspecialidad = async (req = request, res = response) => {
-    try {
-        const { Fecha ,Especialidad } = req.body;
-        const fechaInicio = new Date(Fecha).setHours(0, 0, 0, 0);
-        const fechaFin = new Date(Fecha).setHours(23, 59, 59, 999);
-
-        const expedientes = await Expediente.find(
-            {
-                "ConsultasMedicas.Fecha": { 
-                    $gte: fechaInicio,
-                    $lte: fechaFin 
-                } ,
-              "ConsultasMedicas.Especialidad": {
-                $regex: new RegExp(Especialidad, "i")
-              }
-            },
-            {
-                 ConsultasMedicas: 1
-            }
-          );
-
-        const resultados = [];
-
-        expedientes.forEach(expediente => {
-            expediente.ConsultasMedicas.forEach(Consulta=>{
-                resultados.push({ _idExpediente: expediente._id,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
-            })
-        });
-        resultados.sort((a, b) => new Date(a.Consulta.Fecha) - new Date(b.Consulta.Fecha));
-        
-        res.status(200).json({
-            ok: 200,
-            msg: `Consultas medicas para la fecha ${Fecha} y especialidd ${Especialidad}`,
-            data: resultados
-        });
-        
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            ok: 500,
-            msg: 'Ha ocurrido un error inesperado en el servidor en el metodo GetConsultaMedica'
-        });
-    }
-
-}
-
-
 const PostConsultaMedica = async (req = request, res = response) => {
     try {
-        const { _id } = req.params;
-        const {Peso, Altura, Presion, DescripcionSintomas} = req.body;
-        const expediente = await Expediente.findById(_id);
+        const momentWithTimeZone = req.moment;
+        /*En este apartado la fecha y hora se trabaja en un solo campo , aqui obtenemos la fecha y hora del server que se le
+          configuiro con el middlewares fecha server para que tenga la zona horaria de costa rica 
+        */
+        const   Fecha = momentWithTimeZone().format('YYYY-MM-DD HH:mm:ss');
+        const {Peso, Altura, Presion, DescripcionSintomas,Identificacion} = req.body
+        const expediente = await Expediente.findOne({"Identificicacion":Identificacion});
         
         if(!expediente){
             return res.status(404).json({
@@ -102,8 +63,9 @@ const PostConsultaMedica = async (req = request, res = response) => {
         }
         expediente.Peso=Peso;
         expediente.Presion=Presion;
+        expediente.Altura=Altura;
         expediente.ConsultasMedicas.push({
-            Fecha:new Date().toISOString(),
+            Fecha:Fecha,
             Peso:Peso, 
             Altura:Altura,
             Presion:Presion, 
@@ -129,11 +91,11 @@ const PostConsultaMedica = async (req = request, res = response) => {
 
 const PutConsultaMedica = async (req = request, res = response) => {
     try {
-        const { _id } = req.params;
+        const { Identificacion } = req.params;
         const { _idConsulta, Diagnostico, ExamenSangre, ExamenOrina } = req.body;
         await Expediente.findOneAndUpdate(
-            { _id: _id, "ConsultasMedicas._id": _idConsulta },
-            { $set: { "ConsultasMedicas.$": { _idConsulta, Diagnostico, ExamenSangre, ExamenOrina } } }
+            { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
+            { $set: { "ConsultasMedicas.$": { Diagnostico, ExamenSangre, ExamenOrina } } }
         );
         res.status(200).json({
             ok: 200,
@@ -153,5 +115,4 @@ module.exports={
     GetConsultaMedicaFecha,
     PostConsultaMedica,
     PutConsultaMedica,
-    GetConsultaMedicaFechaEspecialidad
 }

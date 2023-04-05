@@ -1,21 +1,26 @@
 const { Router } = require('express');
-const { GetConsultaMedicaFechaEspecialidad,PostConsultaMedica,PutConsultaMedica, GetConsultaMedicaFecha } = require('../Controllers/Consultas');
+const { PostConsultaMedica,PutConsultaMedica, GetConsultaMedicaFecha } = require('../Controllers/Consultas');
 const { check } = require('express-validator');
-const { Valida_Citas, Errors_Relay, ValidaJWT, RequiereRole, Roles } = require('../Middlewares/Index')
+const { Errors_Relay, ValidaJWT, RequiereRole, Roles } = require('../Middlewares/Index')
 
 const router = Router();
 
-router.get('/', [ValidaJWT, RequiereRole(Roles.admin, Roles.medico), Errors_Relay], GetConsultaMedicaFecha);
+router.get('/', [
+    ValidaJWT,
+    RequiereRole(Roles.admin, Roles.medico),
+    check('Fecha')
+        .notEmpty().withMessage('El campo Fecha está vacio')
+        .isDate().withMessage('El Fecha no es valido , formato date'),
+    Errors_Relay
+    ],GetConsultaMedicaFecha);
 
 
-router.get('/FechaEspecialidad', [ValidaJWT, RequiereRole(Roles.admin, Roles.medico), Errors_Relay], GetConsultaMedicaFechaEspecialidad);
 
 router.post('/', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.enfermera),
-    check('_id')
-    .notEmpty().withMessage('El campo _id es obligatorio')
-    .isMongoId().withMessage('El _id no es valido'),
+    check('Identificacion')
+    .notEmpty().withMessage('El campo Identificacion es obligatorio'),
     check('Peso')
         .notEmpty().withMessage('El campo Identificacion es obligatorio'),
     check('Altura')
@@ -32,9 +37,8 @@ router.post('/', [
 router.put('/:_id', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.medico),
-    check('_id')
-        .notEmpty().withMessage('El campo _id está vacio')
-        .isMongoId().withMessage('El _id no es valido'),
+    check('Identificacion')
+        .notEmpty().withMessage('El campo Identificacion está vacio'),
     check('_idConsulta')
         .notEmpty().withMessage('El campo _idConsulta es obligatorio')
         .isMongoId().withMessage('El _idConsulta no es valido'),

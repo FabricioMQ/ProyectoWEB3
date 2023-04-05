@@ -24,7 +24,7 @@ const GetConsultaExamenes = async (req = request, res = response) => {
 
         expedientes.forEach(expediente => {
             expediente.ConsultasMedicas.forEach(Consulta=>{
-                resultados.push({ _idExpediente: expediente._id,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
+                resultados.push({ Identificacion: expediente.Identificacion,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
             })
         });
         resultados.sort((a, b) => new Date(a.Consulta.Fecha) - new Date(b.Consulta.Fecha));
