@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const { PutExpediente, DeleteExpediente, GetExpediente, PostExpediente, GetExpedienteOne, PostEnfermedad, DeleteEnfermedad, PostMedicamentoAlergico, DeleteMedicamentoAlergico, PostContactoEmergencia, DeleteContactoEmergencia } = require('../Controllers/Expedientes');
-const { Errors_Relay, ValidaJWT, Roles, RequiereRole, Validate_Identificacion } = require('../Middlewares/Index')
+const { Errors_Relay, ValidaJWT, Roles, RequiereRole, Validate_Identificacion,Validate_ContactoEmergencia} = require('../Middlewares/Index')
 const { check } = require('express-validator');
-const { Validate_ContactoEmergencia } = require('../Middlewares/Validar_ContactoEmergencia');
+
 
 const router = Router();
 //expediente

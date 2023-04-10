@@ -42,7 +42,7 @@ const SchemaRegistroExamen=new Schema({
     Color:{
         type:String
     },
-    Leucocit:{
+    Leucocito:{
         type:Number
     },
 })

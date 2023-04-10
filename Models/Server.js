@@ -5,6 +5,7 @@ const listEndpoints = require('express-list-endpoints');
 const cors = require('cors');
 const ZonaHoraria=require('../Middlewares/FechaServer');
 
+
 class Server{
     constructor(){
        this.App=express();
@@ -14,6 +15,7 @@ class Server{
        this.UsuarioPath='/api/usuario'
        this.ExpedientePath='/api/expediente'
        this.ConsultaPath='/api/consulta'
+       this.ExamenesPath='/api/examanes'
        this.MiddleWares();
        this.Routes();
        this.MongoDB();
@@ -34,6 +36,7 @@ class Server{
         this.App.use(this.UsuarioPath,ZonaHoraria,require('../Routes/Usuarios'));
         this.App.use(this.ExpedientePath,ZonaHoraria,require('../Routes/Expedientes'));
         this.App.use(this.ConsultaPath,ZonaHoraria,require('../Routes/Consultas'));
+        this.App.use(this.ExamenesPath,ZonaHoraria,require('../Routes/Examenes'))
         console.log(listEndpoints(this.App,{ extended: true}));
     }
 
