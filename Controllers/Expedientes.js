@@ -29,7 +29,7 @@ const PostExpediente = async (req = request, res = response) => {
 
 const GetExpediente = async (req = request, res = response) => {
     try {
-        const expedientes = await Expediente.find('_id Nombre Apellido Telefono Direccion TipoSangre Peso Edad Altura');
+        const expedientes = await Expediente.find({},'_id Nombre Apellido Telefono Direccion TipoSangre Peso Edad Altura');
         res.status(200).json({
             ok: 200,
             msg: 'Listado de todos los expedientes desde el metodo GetExpediente',
