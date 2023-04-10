@@ -79,8 +79,8 @@ const DeleteExpediente = async (req = request, res = response) => {
 const PutExpediente = async (req = request, res = response) => {
     try {
         const { _id } = req.params;
-        const { Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre} = req.body;
-        await Expediente.findByIdAndUpdate({ _id }, {Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre});
+        const { Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, TipoSangre} = req.body;
+        await Expediente.findByIdAndUpdate({ _id }, {Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, TipoSangre});
         res.status(200).json({
             ok: 200,
             msg: 'Expediente Actualizado con exito desde el metodo PutExpediente'
