@@ -81,14 +81,13 @@ const PostExamenesSangre= async (req = request, res = response) => {
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
           $set: {
-            "ConsultasMedicas.$.RegistrosExamenes": {
-              "Hemoglobina": Hemoglobina,
-              "Hematocrito": Hematocrito,
-              "Trigliceridos": Trigliceridos,
-              "ColesterolTotal": ColesterolTotal,
-              "AcidoUridico": AcidoUridico,
-              "Creatinina": Creatinina 
-            }
+            "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
+              "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
+              "ConsultasMedicas.$.RegistrosExamenes.Trigliceridos": Trigliceridos,
+              "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
+              "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
+              "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina 
+            
           }
         }
       );
@@ -113,12 +112,12 @@ const PostExamenesOrina= async (req = request, res = response) => {
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
           $set: {
-            "ConsultasMedicas.$.RegistrosExamenes": {
-              "Glucosa": Glucosa,
-              "Eritrocitos": Eritrocitos,
-              "Color": Color,
-              "Leucocitos": Leucocitos
-          }
+          
+              "ConsultasMedicas.$.RegistrosExamenes.Glucosa": Glucosa,
+              "ConsultasMedicas.$.RegistrosExamenes.Eritrocitos": Eritrocitos,
+              "ConsultasMedicas.$.RegistrosExamenes.Color": Color,
+              "ConsultasMedicas.$.RegistrosExamenes.Leucocitos": Leucocitos
+          
         }
       }
       );
