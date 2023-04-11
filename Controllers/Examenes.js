@@ -75,11 +75,16 @@ const PostExamenesSangre= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
       const { _idConsulta, Hemoglobina, Hematocrito, Triglicéridos,ColesterolTotal,AcidoUridico,Creatinina } = req.body;
-      const Examenes = { Hemoglobina: Hemoglobina, Hematocrito: Hematocrito, Triglicéridos:Triglicéridos, ColesterolTotal: ColesterolTotal ,AcidoUridico:AcidoUridico,Creatinina:Creatinina}; // Reemplaza valorA, valorB, valorC, valorD con los valores que deseas insertar
+   
 
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
-        { $set: { "ConsultasMedicas.$.RegistrosExamenes": Examenes } } 
+        { $set: { "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
+        "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
+        "ConsultasMedicas.$.RegistrosExamenes.Triglicéridos": Triglicéridos,
+        "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
+        "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
+        "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina  } } 
       );
   
       res.status(200).json({
@@ -99,10 +104,11 @@ const PostExamenesOrina= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
       const { _idConsulta, Glucosa,  Eritrocitos, Color, Leucocitos } = req.body;
-      const Examenes = { Glucosa: Glucosa, Eritrocitos: Eritrocitos, Color:Color, Leucocitos: Leucocitos}
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
-        { $set: { "ConsultasMedicas.$.RegistrosExamenes": Examenes } }
+        { $set: { "ConsultasMedicas.$.RegistrosExamenes.Glucosa": Glucosa, "ConsultasMedicas.$.RegistrosExamenes.Eritrocitos": Eritrocitos, 
+        "ConsultasMedicas.$.RegistrosExamenes.Color": Color, 
+        "ConsultasMedicas.$.RegistrosExamenes.Leucocitos": Leucocitos } }
       );
   
       res.status(200).json({
