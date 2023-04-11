@@ -84,7 +84,8 @@ const SchemaConsultaMedica=new Schema({
         Required:[true,'El campo examenOrina es requerido para la consulta medica']
     },
     RegistrosExamenes:{
-        SchemaRegistroExamen
+        type: SchemaRegistroExamen,
+        default: {}
     },
 })
 const SchemaContactoEmergencia=new Schema({
@@ -154,7 +155,7 @@ TipoSangre:{
     required:[true,'El campo TipoSangre es requerido']
 },
 MedicamentoAlergicos:[
-    SchemaMedicamentoAlergico
+     SchemaMedicamentoAlergico
 ],
 ContactosEmergencias:[
     SchemaContactoEmergencia,

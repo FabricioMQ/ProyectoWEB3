@@ -115,7 +115,7 @@ const PostExamenesOrina= async (req = request, res = response) => {
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
-          "ConsultasMedicas.$.RegistrosExamenes": {
+          "ConsultasMedicas.RegistrosExamenes": {
             "Hemoglobina": Hemoglobina,
             "Hematocrito": Hematocrito,
             "Triglicéridos": Triglicéridos,
