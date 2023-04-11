@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 const Expediente = require('../Models/Expedientes');
-//malo
+
 const GetConsultaMedicaFecha = async (req = request, res = response) => {
     try {
         const { Fecha } = req.body;
