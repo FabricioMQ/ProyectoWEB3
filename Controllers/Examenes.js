@@ -11,17 +11,12 @@ const GetConsultaExamenes = async (req = request, res = response) => {
             "ConsultasMedicas.Fecha": { 
                 $gte: fechaInicio,
                 $lte: fechaFin 
-              } ,
-            $or: [
-              { "ConsultasMedicas.ExamenSangre": true },
-              { "ConsultasMedicas.ExamenOrina": true }
-            ],
-            $or: [
-              { "ConsultasMedicas.RegistrosExamenes": { $exists: false } },
-              { "ConsultasMedicas.RegistrosExamenes": {} }
-            ]
+              }
           }, {
-            ConsultasMedicas: 1
+            ConsultasMedicas: 1,
+            Identificacion:1,
+            Nombre: 1,
+            Apellido: 1
           });
 
         const resultados = [];
