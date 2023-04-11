@@ -92,11 +92,9 @@ const PostExamenesSangre= async (req = request, res = response) => {
           }
         }
       );
-      
-  
       res.status(200).json({
           ok: 200,
-          msg: 'Consulta Actualizada con exito desde el metodo PutConsultaMedica'
+          msg: 'Consulta Actualizada con exito desde el metodo PostExamenesSangre'
       })
   } catch (err) {
       console.log(err);
@@ -124,6 +122,10 @@ const PostExamenesOrina= async (req = request, res = response) => {
         }
       }
       );
+      res.status(200).json({
+        ok: 200,
+        msg: 'Consulta Actualizada con exito desde el metodo PostExamenOrina'
+    })
       
   } catch (err) {
       console.log(err);
