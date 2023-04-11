@@ -74,22 +74,25 @@ const GetConsultaExamenes = async (req = request, res = response) => {
 const PostExamenesSangre= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
-      const { _idConsulta, Hemoglobina, Hematocrito, Triglicéridos,ColesterolTotal,AcidoUridico,Creatinina } = req.body;
+      const { _idConsulta, Hemoglobina, Hematocrito, Trigliceridos,ColesterolTotal,AcidoUridico,Creatinina } = req.body;
    
 
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
-          "ConsultasMedicas.RegistrosExamenes": {
-            "Hemoglobina": Hemoglobina,
-            "Hematocrito": Hematocrito,
-            "Triglicéridos": Triglicéridos,
-            "ColesterolTotal": ColesterolTotal,
-            "AcidoUridico": AcidoUridico,
-            "Creatinina": Creatinina 
+          $set: {
+            "ConsultasMedicas.$.RegistrosExamenes": {
+              "Hemoglobina": Hemoglobina,
+              "Hematocrito": Hematocrito,
+              "Trigliceridos": Trigliceridos,
+              "ColesterolTotal": ColesterolTotal,
+              "AcidoUridico": AcidoUridico,
+              "Creatinina": Creatinina 
+            }
           }
         }
       );
+      
   
       res.status(200).json({
           ok: 200,
