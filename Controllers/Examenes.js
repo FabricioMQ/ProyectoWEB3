@@ -114,19 +114,15 @@ const PostExamenesOrina= async (req = request, res = response) => {
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
-          "ConsultasMedicas.RegistrosExamenes": {
-            "Hemoglobina": Hemoglobina,
-            "Hematocrito": Hematocrito,
-            "Triglicéridos": Triglicéridos,
-            "ColesterolTotal": ColesterolTotal,
-            "AcidoUridico": AcidoUridico,
-            "Creatinina": Creatinina 
-          },
-          $setOnInsert: { 
-            "ConsultasMedicas.$.RegistrosExamenes": {} 
-          } 
-        },
-        { upsert: true }
+          $set: {
+            "ConsultasMedicas.$.RegistrosExamenes": {
+              "Glucosa": Glucosa,
+              "Eritrocitos": Eritrocitos,
+              "Color": Color,
+              "Leucocitos": Leucocitos
+          }
+        }
+      }
       );
       
   } catch (err) {
