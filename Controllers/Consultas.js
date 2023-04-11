@@ -1,26 +1,41 @@
 const { request, response } = require('express');
 const Expediente = require('../Models/Expedientes');
-
+//malo
 const GetConsultaMedicaFecha = async (req = request, res = response) => {
     try {
         const { Fecha } = req.body;
         const momentWithTimeZone = req.moment;
         const fechaInicio = momentWithTimeZone(Fecha).startOf('day').toDate(); // primera hora del día
         const fechaFin = momentWithTimeZone(Fecha).endOf('day').toDate(); // última hora del día
-        const expedientes = await Expediente.find(
-          {
-            "ConsultasMedicas.Fecha": {
-              $gte: fechaInicio,
-              $lte: fechaFin
+        const expedientes = await Expediente.aggregate([
+            {
+              $match: {
+                "ConsultasMedicas.Fecha": {
+                  $gte: fechaInicio,
+                  $lte: fechaFin
+                }
+              }
+            },
+            {
+              $project: {
+                Identificacion: 1,
+                Nombre: 1,
+                Apellido: 1,
+                ConsultasMedicas: {
+                  $filter: {
+                    input: "$ConsultasMedicas",
+                    as: "consulta",
+                    cond: {
+                      $and: [
+                        { $gte: ["$$consulta.Fecha", fechaInicio] },
+                        { $lte: ["$$consulta.Fecha", fechaFin] }
+                      ]
+                    }
+                  }
+                }
+              }
             }
-          },
-          {
-            Identificacion:1,
-            Nombre: 1,
-            Apellido: 1,
-            ConsultasMedicas: 1
-          }
-        );
+          ]);
         const resultados = [];
 
         expedientes.forEach(expediente => {
@@ -87,14 +102,17 @@ const PostConsultaMedica = async (req = request, res = response) => {
         });
     }
 }
-
 const PutConsultaMedica = async (req = request, res = response) => {
     try {
         const { Identificacion } = req.params;
         const { _idConsulta, Diagnostico, ExamenSangre, ExamenOrina } = req.body;
         await Expediente.findOneAndUpdate(
             { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
-            { $set: { "ConsultasMedicas.$": { Diagnostico, ExamenSangre, ExamenOrina } } }
+            { $set: { 
+                "ConsultasMedicas.$.Diagnostico": Diagnostico,
+                "ConsultasMedicas.$.ExamenSangre": ExamenSangre,
+                "ConsultasMedicas.$.ExamenOrina": ExamenOrina 
+            } }
         );
         res.status(200).json({
             ok: 200,

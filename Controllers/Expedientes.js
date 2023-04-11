@@ -1,6 +1,4 @@
-const {request, response
-
-}=require('express');
+const {request, response}=require('express');
 const Expediente = require('../Models/Expedientes');
 
 const PostExpediente = async (req = request, res = response) => {

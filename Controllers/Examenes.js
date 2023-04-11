@@ -1,32 +1,41 @@
 const { request, response } = require('express');
 const Expediente = require('../Models/Expedientes');
-
+//malo
 const GetConsultaExamenes = async (req = request, res = response) => {
     try {
         const { Fecha } = req.body;
         const fechaInicio = new Date(Fecha).setHours(0, 0, 0, 0);
         const fechaFin = new Date(Fecha).setHours(23, 59, 59, 999);
-
-        const expedientes = await Expediente.find({
-            "ConsultasMedicas.Fecha": { 
+        const expedientes = await Expediente.aggregate([
+          {
+            $match: {
+              "ConsultasMedicas.Fecha": {
                 $gte: fechaInicio,
-                $lte: fechaFin 
+                $lte: fechaFin
               }
-              ,
-            $or: [
-              { "ConsultasMedicas.ExamenSangre": true },
-              { "ConsultasMedicas.ExamenOrina": true },
-            ],
-            $and: [
-              { "ConsultasMedicas.RegistrosExamenes": { $exists: false } },
-              { "ConsultasMedicas.RegistrosExamenes": {} }
-            ] 
-          }, {
-            ConsultasMedicas: 1,
-            Identificacion:1,
-            Nombre: 1,
-            Apellido: 1
-          });
+            }
+          },
+          {
+            $project: {
+              Identificacion: 1,
+              Nombre: 1,
+              Apellido: 1,
+              ConsultasMedicas: {
+                $filter: {
+                  input: "$ConsultasMedicas",
+                  as: "consulta",
+                  cond: {
+                    $and: [
+                      { $gte: ["$$consulta.Fecha", fechaInicio] },
+                      { $lte: ["$$consulta.Fecha", fechaFin] }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]);
+        
 
         const resultados = [];
 
@@ -52,6 +61,7 @@ const GetConsultaExamenes = async (req = request, res = response) => {
 
     
 }
+//malo
 const PostExamenesSangre= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
@@ -75,7 +85,7 @@ const PostExamenesSangre= async (req = request, res = response) => {
       });
   }
 }
-
+//malo
 const PostExamenesOrina= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
