@@ -7,7 +7,6 @@ const GetConsultaMedicaFecha = async (req = request, res = response) => {
         const momentWithTimeZone = req.moment;
         const fechaInicio = momentWithTimeZone(Fecha).startOf('day').toDate(); // primera hora del día
         const fechaFin = momentWithTimeZone(Fecha).endOf('day').toDate(); // última hora del día
-        
         const expedientes = await Expediente.find(
           {
             "ConsultasMedicas.Fecha": {

@@ -34,7 +34,7 @@ router.post('/', [
     Errors_Relay
 ], PostConsultaMedica);
 
-router.put('/:_id', [
+router.put('/:Identificacion', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.medico),
     check('Identificacion')
