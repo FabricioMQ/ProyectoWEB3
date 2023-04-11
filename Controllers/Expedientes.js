@@ -316,7 +316,7 @@ const DeleteContactoEmergencia = async (req = request, res = response) => {
         console.log(err);
         res.status(500).json({
             ok: 500,
-            msg: 'Ha ocurrido un error inesperado en el servidor en el metodo PostContactoEmergencia'
+            msg: 'Ha ocurrido un error inesperado en el servidor en el metodo DeleteContactoEmergencia'
         });
     }
 
