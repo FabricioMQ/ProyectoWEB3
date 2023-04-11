@@ -80,13 +80,13 @@ const PostExamenesSangre= async (req = request, res = response) => {
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { 
-          $set: { 
-            "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
-            "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
-            "ConsultasMedicas.$.RegistrosExamenes.Triglicéridos": Triglicéridos,
-            "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
-            "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
-            "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina 
+          "ConsultasMedicas.RegistrosExamenes": {
+            "Hemoglobina": Hemoglobina,
+            "Hematocrito": Hematocrito,
+            "Triglicéridos": Triglicéridos,
+            "ColesterolTotal": ColesterolTotal,
+            "AcidoUridico": AcidoUridico,
+            "Creatinina": Creatinina 
           },
           $setOnInsert: { 
             "ConsultasMedicas.$.RegistrosExamenes": {} 
