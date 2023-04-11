@@ -114,20 +114,22 @@ const PostExamenesOrina= async (req = request, res = response) => {
       const { _idConsulta, Glucosa,  Eritrocitos, Color, Leucocitos } = req.body;
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
-        { $set: { "ConsultasMedicas.$.RegistrosExamenes.Glucosa": Glucosa, "ConsultasMedicas.$.RegistrosExamenes.Eritrocitos": Eritrocitos, 
-        "ConsultasMedicas.$.RegistrosExamenes.Color": Color, 
-        "ConsultasMedicas.$.RegistrosExamenes.Leucocitos": Leucocitos } },
-        $setOnInsert: { 
-          "ConsultasMedicas.$.RegistrosExamenes": {} 
-        } 
-        ,
-      { upsert: true }
+        { 
+          $set: { 
+            "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
+            "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
+            "ConsultasMedicas.$.RegistrosExamenes.Triglicéridos": Triglicéridos,
+            "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
+            "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
+            "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina 
+          },
+          $setOnInsert: { 
+            "ConsultasMedicas.$.RegistrosExamenes": {} 
+          } 
+        },
+        { upsert: true }
       );
-  
-      res.status(200).json({
-          ok: 200,
-          msg: 'Consulta Actualizada con exito desde el metodo PostExamenesSangreOrina'
-      })
+      
   } catch (err) {
       console.log(err);
       res.status(500).json({
