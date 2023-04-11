@@ -12,6 +12,15 @@ const GetConsultaExamenes = async (req = request, res = response) => {
                 $gte: fechaInicio,
                 $lte: fechaFin 
               }
+              ,
+            $or: [
+              { "ConsultasMedicas.ExamenSangre": true },
+              { "ConsultasMedicas.ExamenOrina": true },
+            ],
+            $and: [
+              { "ConsultasMedicas.RegistrosExamenes": { $exists: false } },
+              { "ConsultasMedicas.RegistrosExamenes": {} }
+            ] 
           }, {
             ConsultasMedicas: 1,
             Identificacion:1,
