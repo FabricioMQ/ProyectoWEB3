@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {GetConsultaExamenes, PostExamenesSangre} = require('../Controllers/Examenes');
+const {GetConsultaExamenes, PostExamenesSangre, PostExamenesOrina} = require('../Controllers/Examenes');
 const { Errors_Relay, ValidaJWT, Roles, RequiereRole} = require('../Middlewares/Index')
 const { check } = require('express-validator');
 
@@ -48,6 +48,6 @@ router.post('/orina/:Identificacion', [
     check('Leucocitos')
         .notEmpty().withMessage('El campo Leucocitos es obligatorio'),
     Errors_Relay
-], PostExamenesSangre);
+], PostExamenesOrina);
 
 module.exports=router
