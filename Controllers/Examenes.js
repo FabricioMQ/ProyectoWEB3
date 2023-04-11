@@ -1,41 +1,50 @@
 const { request, response } = require('express');
 const Expediente = require('../Models/Expedientes');
-//malo
+
 const GetConsultaExamenes = async (req = request, res = response) => {
-    try {
-        const { Fecha } = req.body;
-        const fechaInicio = new Date(Fecha).setHours(0, 0, 0, 0);
-        const fechaFin = new Date(Fecha).setHours(23, 59, 59, 999);
-        const expedientes = await Expediente.aggregate([
-          {
-            $match: {
-              "ConsultasMedicas.Fecha": {
-                $gte: fechaInicio,
-                $lte: fechaFin
-              }
-            }
-          },
-          {
-            $project: {
-              Identificacion: 1,
-              Nombre: 1,
-              Apellido: 1,
-              ConsultasMedicas: {
-                $filter: {
-                  input: "$ConsultasMedicas",
-                  as: "consulta",
-                  cond: {
-                    $and: [
-                      { $gte: ["$$consulta.Fecha", fechaInicio] },
-                      { $lte: ["$$consulta.Fecha", fechaFin] }
-                    ]
-                  }
-                }
+  try{    const { Fecha } = req.body;
+    const momentWithTimeZone = req.moment;
+    const fechaInicio = momentWithTimeZone(Fecha).startOf('day').toDate(); // primera hora del día
+    const fechaFin = momentWithTimeZone(Fecha).endOf('day').toDate(); // última hora del día
+    const expedientes = await Expediente.aggregate([
+      {
+        $match: {
+          "ConsultasMedicas.Fecha": {
+            $gte: fechaInicio,
+            $lte: fechaFin
+          }
+        }
+      },
+      {
+        $project: {
+          Identificacion: 1,
+          Nombre: 1,
+          Apellido: 1,
+          ConsultasMedicas: {
+            $filter: {
+              input: "$ConsultasMedicas",
+              as: "consulta",
+              cond: {
+                $and: [
+                  { $gte: ["$$consulta.Fecha", fechaInicio] },
+                  { $lte: ["$$consulta.Fecha", fechaFin] }
+                ]
               }
             }
           }
-        ]);
-        
+        }
+      },
+      {
+        $match: {
+          $or: [
+            { "ConsultasMedicas.ExamenSangre": true },
+            { "ConsultasMedicas.ExamenOrina": true }
+          ]
+        }
+      }
+      
+    ]);
+    
 
         const resultados = [];
 
@@ -44,7 +53,7 @@ const GetConsultaExamenes = async (req = request, res = response) => {
                 resultados.push({ Identificacion: expediente.Identificacion,Nombre:expediente.Nombre+' '+expediente.Apellido, Consulta });
             })
         });
-        resultados.sort((a, b) => new Date(a.Consulta.Fecha) - new Date(b.Consulta.Fecha));
+        resultados.sort((a, b) => a.Consulta.Fecha - b.Consulta.Fecha);
 
         res.status(200).json({
             ok: 200,
@@ -61,7 +70,7 @@ const GetConsultaExamenes = async (req = request, res = response) => {
 
     
 }
-//malo
+
 const PostExamenesSangre= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
