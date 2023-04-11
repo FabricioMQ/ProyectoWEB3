@@ -20,7 +20,7 @@ router.post('/sangre/:Identificacion', [
         .notEmpty().withMessage('El campo Hemoglobina es obligatorio'),
     check('Hematocrito')
         .notEmpty().withMessage('El campo Hematocrito es obligatorio'),
-    check('Triglicéridos')
+    check('Trigliceridos')
         .notEmpty().withMessage('El campo Triglicéridos es obligatorio'),
     check('ColesterolTotal')
         .notEmpty().withMessage('El campo ColesterolTotal es obligatorio'),
