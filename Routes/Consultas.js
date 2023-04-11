@@ -42,7 +42,7 @@ router.put('/:Identificacion', [
     check('_idConsulta')
         .notEmpty().withMessage('El campo _idConsulta es obligatorio')
         .isMongoId().withMessage('El _idConsulta no es valido'),
-    check(' Diagnostico')
+    check('Diagnostico')
         .notEmpty().withMessage('El campo Diagnostico es obligatorio'),
     check('ExamenSangre')
         .notEmpty().withMessage('El campo ExamenSangre es obligatorio')
