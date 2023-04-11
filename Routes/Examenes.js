@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', [ValidaJWT, RequiereRole(Roles.admin, Roles.enfermera), Errors_Relay], GetConsultaExamenes);
 
 
-router.post('/sangre', [
+router.post('/sangre/:Identificacion', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.enfermera),
     check('Identificacion')
@@ -31,7 +31,7 @@ router.post('/sangre', [
     Errors_Relay
 ], PostExamenesSangre);
 
-router.post('/orina', [
+router.post('/orina/:Identificacion', [
     ValidaJWT,
     RequiereRole(Roles.admin, Roles.enfermera),
     check('Identificacion')
