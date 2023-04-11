@@ -79,12 +79,20 @@ const PostExamenesSangre= async (req = request, res = response) => {
 
       await Expediente.findOneAndUpdate(
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
-        { $set: { "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
-        "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
-        "ConsultasMedicas.$.RegistrosExamenes.Triglicéridos": Triglicéridos,
-        "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
-        "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
-        "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina  } } 
+        { 
+          $set: { 
+            "ConsultasMedicas.$.RegistrosExamenes.Hemoglobina": Hemoglobina,
+            "ConsultasMedicas.$.RegistrosExamenes.Hematocrito": Hematocrito,
+            "ConsultasMedicas.$.RegistrosExamenes.Triglicéridos": Triglicéridos,
+            "ConsultasMedicas.$.RegistrosExamenes.ColesterolTotal": ColesterolTotal,
+            "ConsultasMedicas.$.RegistrosExamenes.AcidoUridico": AcidoUridico,
+            "ConsultasMedicas.$.RegistrosExamenes.Creatinina": Creatinina 
+          },
+          $setOnInsert: { 
+            "ConsultasMedicas.$.RegistrosExamenes": {} 
+          } 
+        },
+        { upsert: true }
       );
   
       res.status(200).json({
@@ -108,7 +116,12 @@ const PostExamenesOrina= async (req = request, res = response) => {
         { "Identificacion": Identificacion, "ConsultasMedicas._id": _idConsulta },
         { $set: { "ConsultasMedicas.$.RegistrosExamenes.Glucosa": Glucosa, "ConsultasMedicas.$.RegistrosExamenes.Eritrocitos": Eritrocitos, 
         "ConsultasMedicas.$.RegistrosExamenes.Color": Color, 
-        "ConsultasMedicas.$.RegistrosExamenes.Leucocitos": Leucocitos } }
+        "ConsultasMedicas.$.RegistrosExamenes.Leucocitos": Leucocitos } },
+        $setOnInsert: { 
+          "ConsultasMedicas.$.RegistrosExamenes": {} 
+        } 
+        ,
+      { upsert: true }
       );
   
       res.status(200).json({
