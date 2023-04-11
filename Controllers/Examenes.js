@@ -87,12 +87,8 @@ const PostExamenesSangre= async (req = request, res = response) => {
             "ColesterolTotal": ColesterolTotal,
             "AcidoUridico": AcidoUridico,
             "Creatinina": Creatinina 
-          },
-          $setOnInsert: { 
-            "ConsultasMedicas.$.RegistrosExamenes": {} 
-          } 
-        },
-        { upsert: true }
+          }
+        }
       );
   
       res.status(200).json({
