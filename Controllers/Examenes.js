@@ -99,7 +99,7 @@ const PostExamenesSangre= async (req = request, res = response) => {
       });
   }
 }
-//malo
+
 const PostExamenesOrina= async (req = request, res = response) => {
   try {
       const { Identificacion } = req.params;
