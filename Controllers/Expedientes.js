@@ -11,7 +11,7 @@ const PostExpediente = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Registrado correctamente"
+                "msg": "Expediente registrado con exito"
             }
         );
     }
@@ -30,7 +30,7 @@ const GetExpediente = async (req = request, res = response) => {
         const expedientes = await Expediente.find({},'_id Nombre Apellido Telefono Direccion TipoSangre Peso Edad Altura');
         res.status(200).json({
             ok: 200,
-            msg: 'Listado de todos los expedientes desde el metodo GetExpediente',
+            msg: 'Listado de todos los expedientes',
             data: expedientes
         })
     } catch (err) {
@@ -47,7 +47,7 @@ const GetExpedienteOne = async (req = request, res = response) => {
         const expediente = await Expediente.findById(_id);
         res.status(200).json({
             ok: 200,
-            msg: 'Informacion personal de una sola persona desde el metodo GetExpedienteOne',
+            msg: 'Informacion personal del expediente',
             data: expediente
         })
     } catch (err) {
@@ -64,7 +64,7 @@ const DeleteExpediente = async (req = request, res = response) => {
         await Expediente.findByIdAndDelete({ _id });
         res.status(200).json({
             ok: 200,
-            msg: 'Expediente eliminado con exito desde el metodo DeleteExpediente'
+            msg: 'Expediente eliminado con exito'
         })
     } catch (err) {
         console.log(err);
@@ -81,7 +81,7 @@ const PutExpediente = async (req = request, res = response) => {
         await Expediente.findByIdAndUpdate({ _id }, {Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, TipoSangre});
         res.status(200).json({
             ok: 200,
-            msg: 'Expediente Actualizado con exito desde el metodo PutExpediente'
+            msg: 'Expediente Actualizado con exito'
         })
     } catch (err) {
         console.log(err);
@@ -110,7 +110,7 @@ const PostMedicamentoAlergico = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Registrado correctamente"
+                "msg": "Medicamento registrado con exito"
             }
         );
     }
@@ -152,7 +152,7 @@ const DeleteMedicamentoAlergico = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Eliminado el medicamento correctamente"
+                "msg": "Medicamento eliminado con exito"
             }
         );
     }
@@ -184,7 +184,7 @@ const PostEnfermedad = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Registrado correctamente"
+                "msg": "Enfermedad registrada con exito"
             }
         );
     }
@@ -226,7 +226,7 @@ const DeleteEnfermedad = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Eliminada la enfermedad correctamente"
+                "msg": "Enfermedad eliminada con exito"
             }
         );
     }
@@ -264,7 +264,7 @@ const PostContactoEmergencia = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Registrado correctamente"
+                "msg": "Contacto registrado con exito"
             }
         );
     }
@@ -306,7 +306,7 @@ const DeleteContactoEmergencia = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Eliminado el contacto de emergencia correctamente"
+                "msg": "Contacto de emergencia eliminado con exito"
             }
         );
     }

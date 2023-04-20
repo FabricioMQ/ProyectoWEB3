@@ -10,7 +10,7 @@ const PostRegistrarCita=async(req=request, res=response)=>{
         res.status(200).json(
             {
                 ok:200,
-                "msg":"Registrado cita correctamente",
+                "msg":"Cita registrada Correctamente",
             }
         );
     }
@@ -28,7 +28,7 @@ const DeleteCita=async(req=request,res=response)=>{
         await Cita.findByIdAndDelete(_id);
         res.status(200).json({
             ok:200,
-            msg:'Usuario eliminado con exito desde el metodo DeleteCitas'
+            msg:'Cita eliminada con exito'
         })
     } catch (err) {
         console.log(err);
@@ -45,7 +45,7 @@ const PutCita=async(req=request,res=response)=>{
         await Cita.findByIdAndUpdate({_id},Fecha,Hora,Medico);
         res.status(200).json({
             ok:200,
-            msg:'Cita Actualizada con exito desde el metodo PutCitas'
+            msg:'Cita actualizada con exito'
         })
     } catch (err) {
         console.log(err);
@@ -79,7 +79,7 @@ const GetCitas=async(req=request,res=response)=>{
           
         res.status(200).json({
             ok:200,
-            msg:'Listado de todos los usuarios desde el metodo GetCitas',
+            msg:'Listado de todas las citas',
             Fecha,
             data:citasFiltradas
         })

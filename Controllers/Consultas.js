@@ -90,7 +90,7 @@ const PostConsultaMedica = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                "msg": "Registrado correctamente"
+                "msg": "Consulta registrada con exito"
             }
         );
     }
@@ -116,7 +116,7 @@ const PutConsultaMedica = async (req = request, res = response) => {
         );
         res.status(200).json({
             ok: 200,
-            msg: 'Consulta Actualizada con exito desde el metodo PutConsultaMedica'
+            msg: 'Consulta Actualizada con exito'
         })
     } catch (err) {
         console.log(err);

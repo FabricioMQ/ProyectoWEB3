@@ -14,7 +14,7 @@ const PostRegistrarUsuario = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                msg: "Registrado correctamente"
+                msg: "Usuario registrado con exito"
             }
         );
     }
@@ -33,7 +33,7 @@ const GetUsuarios = async (req = request, res = response) => {
         const usuarios = await Usuario.find({}, { Password: 0 });
         res.status(200).json({
             ok: 200,
-            msg: 'Listado de todos los usuarios desde el metodo GetUsuarios',
+            msg: 'Listado de todos los usuarios',
             data: usuarios
         })
     } catch (err) {
@@ -50,7 +50,7 @@ const DeleteUsuario = async (req = request, res = response) => {
         await Usuario.findByIdAndDelete({ _id });
         res.status(200).json({
             ok: 200,
-            msg: 'Usuario eliminado con exito desde el metodo DeleteUsuarios'
+            msg: 'Usuario eliminado con exito'
         })
     } catch (err) {
         console.log(err);
@@ -67,7 +67,7 @@ const PutUsuario = async (req = request, res = response) => {
         await Usuario.findByIdAndUpdate({ _id }, { Rol });
         res.status(200).json({
             ok: 200,
-            msg: 'Usuario Actualizado con exito desde el metodo PutUsuarios'
+            msg: 'Usuario Actualizado con exito'
         })
     } catch (err) {
         console.log(err);

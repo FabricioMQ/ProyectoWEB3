@@ -93,7 +93,7 @@ const PostExamenesSangre= async (req = request, res = response) => {
       );
       res.status(200).json({
           ok: 200,
-          msg: 'Consulta Actualizada con exito desde el metodo PostExamenesSangre'
+          msg: 'Examen de sangre registrado con exito'
       })
   } catch (err) {
       console.log(err);
@@ -123,7 +123,7 @@ const PostExamenesOrina= async (req = request, res = response) => {
       );
       res.status(200).json({
         ok: 200,
-        msg: 'Consulta Actualizada con exito desde el metodo PostExamenOrina'
+        msg: 'Examen de orina registrado con exito'
     })
       
   } catch (err) {
