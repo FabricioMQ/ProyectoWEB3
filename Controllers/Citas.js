@@ -10,7 +10,7 @@ const PostRegistrarCita=async(req=request, res=response)=>{
         res.status(200).json(
             {
                 ok:200,
-                "msg":"Cita registrada Correctamente",
+                msg:'Cita registrada Correctamente',
             }
         );
     }

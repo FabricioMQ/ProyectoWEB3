@@ -14,7 +14,7 @@ const PostRegistrarUsuario = async (req = request, res = response) => {
         res.status(200).json(
             {
                 ok: 200,
-                msg: "Usuario registrado con exito"
+                msg: 'Usuario registrado con exito'
             }
         );
     }
