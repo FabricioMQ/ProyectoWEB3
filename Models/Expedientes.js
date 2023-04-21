@@ -152,7 +152,7 @@ TipoSangre:{
     type:String,
     required:[true,'El campo TipoSangre es requerido']
 },
-MedicamentoAlergicos:[
+MedicamentosAlergicos:[
      SchemaMedicamentoAlergico
 ],
 ContactosEmergencias:[

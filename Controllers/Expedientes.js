@@ -4,7 +4,7 @@ const Expediente = require('../Models/Expedientes');
 const PostExpediente = async (req = request, res = response) => {
     try {
 
-        const {Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentoAlergicos, ContactosEmergencias} = req.body;
+        const {Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentosAlergicos, ContactosEmergencias} = req.body;
         const expediente = new Expediente({Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentoAlergicos, ContactosEmergencias});
 
         await expediente.save();
@@ -104,7 +104,7 @@ const PostMedicamentoAlergico = async (req = request, res = response) => {
               });
         }
 
-        expediente.MedicamentoAlergicos.push({Nombre})
+        expediente.MedicamentosAlergicos.push({Nombre})
         await expediente.save();
         
         res.status(200).json(
@@ -136,7 +136,7 @@ const DeleteMedicamentoAlergico = async (req = request, res = response) => {
               });
         }
 
-        const medicamento = expediente.MedicamentoAlergicos.find((m) => m._id.toString() === _idMedicamento);
+        const medicamento = expediente.MedicamentosAlergicos.find((m) => m._id.toString() === _idMedicamento);
 
         if (!medicamento) {
             return res.status(404).json({
@@ -145,7 +145,7 @@ const DeleteMedicamentoAlergico = async (req = request, res = response) => {
             });
           }
         
-          expediente.MedicamentoAlergicos.pull(medicamento);
+          expediente.MedicamentosAlergicos.pull(medicamento);
 
         await expediente.save();
           
