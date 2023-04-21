@@ -42,16 +42,6 @@ router.post('/', [
     check('ContactosEmergencias')
         .isArray().withMessage('El campo ContactosEmergencias debe ser un array')
         .notEmpty().withMessage('El campo ContactosEmergencias es obligatorio'),
-    check('ContactosEmergencias.*.Nombre')
-        .notEmpty().withMessage('El campo ContactosEmergencias.Nombre es obligatorio'),
-    check('ContactosEmergencias.*.Apellido')
-        .notEmpty().withMessage('El campo ContactosEmergencias.Apellido es obligatorio'),
-    check('ContactosEmergencias.*.Relacion')
-        .notEmpty().withMessage('El campo ContactosEmergencias.Relaciones obligatorio'),
-    check('ContactosEmergencias.*.Telefono')
-        .notEmpty().withMessage('El campo ContactosEmergencias.Telefono es obligatorio'),
-    check('ContactosEmergencias.*.Direccion')
-        .notEmpty().withMessage('El campo ContactosEmergencias.Direccion es obligatorio'),
     Errors_Relay
 ], PostExpediente);
 
