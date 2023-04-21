@@ -15,6 +15,7 @@ const ValidaJWT = (req=request,res=response,next)=>{
         const {id,rol}=payload;
         req.validate=id;
         req.Rol=rol;
+        next();
     } catch (err) {
         console.log(err);
         res.status(400).json({
@@ -22,6 +23,5 @@ const ValidaJWT = (req=request,res=response,next)=>{
             msg:'El token no es valido'
         })
     }
-    next();
 }
 module.exports={ValidaJWT}
