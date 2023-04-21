@@ -7,7 +7,7 @@ const Errors_Relay= async(req=request,res=response,next)=>{
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ 
-        msg:'Error en los campos', 
+        msg:'Error en los campos ,verificar ', 
         data: errors.array() });
     }
     next();
