@@ -3,14 +3,12 @@ const {Schema,model}=require('mongoose');
 const SchemaEnfermedad=new Schema({
     Nombre:{
         type:String,
-        unique:true,
         Required:[true,'El campo Nombre es requerido para la enfermedad']
     }
 })
 const SchemaMedicamentoAlergico=new Schema({
     Nombre:{
         type:String,
-        unique:true,
         Required:[true,'El campo Nombre es requerido para el medicamento']
     }
 })
