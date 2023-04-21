@@ -5,7 +5,7 @@ const PostExpediente = async (req = request, res = response) => {
     try {
 
         const {Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentosAlergicos, ContactosEmergencias} = req.body;
-        const expediente = new Expediente({Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentoAlergicos, ContactosEmergencias});
+        const expediente = new Expediente({Identificacion, Nombre, Apellido, Telefono, Direccion, Peso, Edad, Altura, Enfermedades, TipoSangre, MedicamentosAlergicos, ContactosEmergencias});
 
         await expediente.save();
         res.status(200).json(
