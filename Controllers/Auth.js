@@ -54,7 +54,7 @@ const GoogleSingIn = async (req = request, res = response) => {
                 Password: 'p',
                 Google: true,
             }
-            usuario = new Usuarios(data);
+            usuario = new Usuario(data);
             await usuario.save();
         }
 
