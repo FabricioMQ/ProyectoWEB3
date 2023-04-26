@@ -44,8 +44,6 @@ router.post('/', [
         check('Hora')
             .notEmpty().withMessage('El campo Hora es obligatorio')
             .isTime().withMessage('El formato de Hora no es valida'),
-        check('Especialidad')
-            .notEmpty().withMessage('El campo Especialidad es obligatorio'),
         check('Medico')
             .notEmpty().withMessage('El campo Medico es obligatorio')
             .custom((value, { req }) => {
